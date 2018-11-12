@@ -41,3 +41,18 @@ def capture_text():
             filtered.append(sequence)
     return filtered
 
+def my_capture_text():
+    pattern_prefix = 'it was the '
+    pattern_middle = ' of '
+    sub_sentences = text.split(", ")
+
+    filterd = []
+    for sub in sub_sentences:
+        if sub.lower().find(pattern_prefix) > -1 and sub.find(pattern_middle) > -1:
+            captured = sub[len(pattern_prefix):].split(pattern_middle)[1]
+
+            if captured[0].islower():
+                filterd.append(sub.split(pattern_middle)[1])
+
+    return filterd
+
