@@ -2,42 +2,18 @@ text = "It was the best of times, it was the worst of times, it was the age of w
 
 
 def is_valid(text, portion):
-    sequence = ''
-    for c in text:
-        sequence += c
-        if len(sequence) == len(portion):
-            if sequence == portion:
-                return True
-            sequence = sequence[1:]
-    return False
-
+    return portion in text
 
 def capture_text():
-    sequence = ''
-    capture = False
-    captured = []
-    for c in text:
-        sequence += c
-        if (capture and
-            sequence.endswith(', ')):
-            capture = False
-            captured.append(sequence[:-2])
-            sequence = ''
-        if is_valid(sequence.lower(), 'it was the '):
-            sequence = ''
-            capture = True
     filtered = []
-    for entry in captured:
-        sequence = ''
-        capture = False
-        for c in entry:
-            if is_valid(sequence, ' of '):
-                sequence = ''
-                if c not in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
-                    capture = True
-            sequence += c
-        if (capture and
-            sequence not in captured):
-            filtered.append(sequence)
+    for sequence in text.split(', '):
+        if is_valid(sequence.lower(), 'it was the ') \
+                and is_valid(sequence, ' of '):
+            s = sequence.split(' of ')[1]
+            if s[0] not in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
+                filtered.append(s)
     return filtered
 
+
+if __name__ == '__main__':
+    print capture_text()
